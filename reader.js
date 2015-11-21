@@ -6,23 +6,22 @@ $(document).ready(function() {
 	// Predetermined winning values
 	var winningValues = [';763952?'];
 
-	// Enter key press to be binded
-	$('#value').keyup(function(e){
-	    if(e.keyCode == 13)
-	    {
-	        $(this).trigger("enterKey");
-	    }
-	});
-
 	// Prevent the user from defocussing the input field
 	$('#value').focusout(function() {
 		$('#value').focus();
+	});	
+
+	// Enter key press to be binded
+	$('#value').keyup(function(e){
+	    if(e.keyCode == 13) {
+	        $(this).trigger("enterKey");
+	    }
 	});
 
 	// Enter key is pressed/card is swiped
 	$('#value').bind("enterKey",function(){
 
-		// Clear win/loss
+		// Clear win and loss
 		$('#win, #loss').css('color', '#ffffff');
 
 		var scannedValue = $(this).val();
@@ -50,7 +49,7 @@ $(document).ready(function() {
 		}
 
 	   // Empty the input field for the next scan
-	   $(this).val('')
+	   $(this).val('');
 	});	
 
 });
