@@ -1,12 +1,25 @@
 $(document).ready(function() {
 
-	// Winning values
-	var winningValues = [';763952?'];
-
-	// Select input field
+	// Select the off-screen input field on page load
 	$('#value').focus();
 
-	// Behave when enter key is pressed/card is swiped
+	// Predetermined winning values
+	var winningValues = [';763952?'];
+
+	// Enter key press to be binded
+	$('#value').keyup(function(e){
+	    if(e.keyCode == 13)
+	    {
+	        $(this).trigger("enterKey");
+	    }
+	});
+
+	// Prevent the user from defocussing the input field
+	$('#value').focusout(function() {
+		$('#value').focus();
+	});
+
+	// Enter key is pressed/card is swiped
 	$('#value').bind("enterKey",function(){
 
 		// Clear win/loss
@@ -14,8 +27,9 @@ $(document).ready(function() {
 
 		var scannedValue = $(this).val();
 
-		// Check for a valid scan
-		if (/^(;\d+\?$)/.test(scannedValue)){
+		// Check for a valid scan using the regular expression: start of string, beginning capturing group, semi-colon, any number of digits, question mark, ending capturing group, end of string
+		// Ex. ;763952?
+		if (/^(;\d+\?)$/.test(scannedValue)){
 			$('#status').text('Card Scanned!  Loading...');
 
 			// Add suspense
@@ -35,21 +49,8 @@ $(document).ready(function() {
 			$('#status').text('Invalid Scan!  Please try again');
 		}
 
-	   // Empty the input field
+	   // Empty the input field for the next scan
 	   $(this).val('')
-	});
-
-	// Enter key function
-	$('#value').keyup(function(e){
-	    if(e.keyCode == 13)
-	    {
-	        $(this).trigger("enterKey");
-	    }
-	});
-
-	// Prevent the user from unfocusing the input field
-	$('#value').focusout(function() {
-		$('#value').focus();
-	});
+	});	
 
 });
