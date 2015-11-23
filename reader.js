@@ -3,9 +3,6 @@ $(document).ready(function() {
 	// Select the off-screen input field on page load
 	$('#value').focus();
 
-	// Predetermined winning values
-	var winningValues = [';763952?'];
-
 	// Prevent the user from defocussing the input field
 	$('#value').focusout(function() {
 		$('#value').focus();
@@ -22,7 +19,7 @@ $(document).ready(function() {
 	$('#value').bind("enterKey",function(){
 
 		// Clear win and loss
-		$('#win, #loss').css('color', '#ffffff');
+		$('.category').css('color', '#ffffff');
 
 		var scannedValue = $(this).val();
 
@@ -35,12 +32,16 @@ $(document).ready(function() {
 			setTimeout(function(){
 				$('#status').text('Waiting for Scan...');
 				// Check to see if entered value is a winner
-				if ($.inArray(scannedValue, winningValues) != -1){
-					$('#win').css('color', 'red');
-					console.log('winner: ' + scannedValue);
-				} else {
-					$('#loss').css('color', 'red');
-					console.log('loser: ' + scannedValue);
+				switch (scannedValue){
+					case ';612763?':
+						$('#promotional').css('color', 'red');
+						break;
+					case ';952507?':
+						$('#prize').css('color', 'red');
+						break;
+					default:
+						$('#loss').css('color', 'red');
+						break;						
 				}
 			},2000);
 
