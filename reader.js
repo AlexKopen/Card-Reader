@@ -10,9 +10,9 @@ $(document).ready(function() {
 
 	// Enter key press to be binded
 	$('#value').keyup(function(e){
-	    if(e.keyCode == 13) {
-	        $(this).trigger("enterKey");
-	    }
+		if(e.keyCode == 13) {
+			$(this).trigger("enterKey");
+		}
 	});
 
 	// Enter key is pressed/card is swiped
@@ -41,7 +41,7 @@ $(document).ready(function() {
 						break;
 					default:
 						$('#loss').css('color', 'red');
-						break;						
+						break;
 				}
 			},2000);
 
@@ -49,8 +49,8 @@ $(document).ready(function() {
 			$('#status').text('Invalid Scan!  Please try again');
 		}
 
-	   // Empty the input field for the next scan
-	   $(this).val('');
-	});	
+		// Empty the input field for the next scan
+		$(this).val('');
+	});
 
 });
