@@ -13,6 +13,14 @@ body {
 	width: 1000px;
 }
 
-h1 {
+h1, p {
 	text-align: center;
+}
+
+#invalid {
+	color: red;
+}
+
+#messages {
+	height: 100px;
 }

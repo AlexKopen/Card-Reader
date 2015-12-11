@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+	// Number of winners
+	var firstPlaceWinnerCount = 0;
+	var secondPlaceWinnerCount = 0;
+
 	// Select the off-screen input field on page load
 	$('#value').focus();
 
@@ -27,17 +31,21 @@ $(document).ready(function() {
 		// Ex. ;763952?
 		if (/^(;\d+\?)$/.test(scannedValue)){
 			$('#status').text('Card Scanned!  Loading...');
+			$('#invalid').text('');
 
 			// Add suspense
 			setTimeout(function(){
 				$('#status').text('Waiting for Scan...');
-				// Check to see if entered value is a winner
 				switch (scannedValue){
-					case ';612763?':
-						$('#promotional').css('color', 'red');
+					case ';888111888?':
+						firstPlaceWinnerCount++;
+						$('#first-place-count').text(firstPlaceWinnerCount);
+						$('#first-place').css('color', 'red');
 						break;
-					case ';952507?':
-						$('#prize').css('color', 'red');
+					case ';111333555?':
+						secondPlaceWinnerCount++;
+						$('#second-place-count').text(secondPlaceWinnerCount);
+						$('#second-place').css('color', 'red');
 						break;
 					default:
 						$('#loss').css('color', 'red');
@@ -46,7 +54,7 @@ $(document).ready(function() {
 			},2000);
 
 		} else {
-			$('#status').text('Invalid Scan!  Please try again');
+			$('#invalid').text('Invalid Scan!  Please try again');
 		}
 
 		// Empty the input field for the next scan
