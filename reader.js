@@ -40,21 +40,23 @@ $(document).ready(function() {
 					case ';888111888?':
 						firstPlaceWinnerCount++;
 						$('#first-place-count').text(firstPlaceWinnerCount);
-						$('#first-place').css('color', 'red');
+						$('#first-place').css('color', '#ff0000');
 						break;
 					case ';111333555?':
 						secondPlaceWinnerCount++;
 						$('#second-place-count').text(secondPlaceWinnerCount);
-						$('#second-place').css('color', 'red');
+						$('#second-place').css('color', '#ff0000');
 						break;
 					default:
-						$('#loss').css('color', 'red');
+						$('#loss').css('color', '#ff0000');
 						break;
 				}
 			},2000);
 
 		} else {
 			$('#invalid').text('Invalid Scan!  Please try again');
+			// Flash
+			$('#invalid').fadeOut('100').fadeIn('100');
 		}
 
 		// Empty the input field for the next scan

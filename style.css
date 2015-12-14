@@ -18,7 +18,7 @@ h1, p {
 }
 
 #invalid {
-	color: red;
+	color: #ff0000;
 }
 
 #messages {
