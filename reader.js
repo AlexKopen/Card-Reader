@@ -1,5 +1,21 @@
 $(document).ready(function() {
 
+	// Timeout variable for the waiting video after card swipe
+	var waitingTimeout;
+
+	// Start waiting video timeout
+	function startWaitingTimeout(){
+		waitingTimeout = setTimeout(function(){
+			$('#waiting').get(0).play();
+			$('#waiting').css('display', '');
+		}, 15000);	
+	}
+
+	// Clear waiting video timeout
+	function clearWaitingTimeout(){
+		clearTimeout(waitingTimeout);
+	}
+
 	// Number of winners
 	var firstPlaceWinnerCount = 0;
 	var secondPlaceWinnerCount = 0;
@@ -8,13 +24,14 @@ $(document).ready(function() {
 	$('#value').focus();
 
 	// Prevent the user from defocussing the input field
-	$('#value').focusout(function() {
+	$('#value').focusout(function(){
 		$('#value').focus();
 	});	
 
 	// Enter key press to be binded
 	$('#value').keyup(function(e){
 		if(e.keyCode == 13) {
+			// TRIGGER WARNING
 			$(this).trigger("enterKey");
 		}
 	});
@@ -27,11 +44,8 @@ $(document).ready(function() {
 		$('#waiting').css('display', 'none');
 
 		// Replay the video after an interval of time has passed
-		// TODO: Reset after each scan
-		setTimeout(function(){
-			$('#waiting').get(0).play();
-			$('#waiting').css('display', '');
-		}, 10000);		
+		clearWaitingTimeout();
+		startWaitingTimeout();	
 
 		// Clear win and loss
 		$('.category').css('color', '#ffffff');
