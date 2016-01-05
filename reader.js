@@ -22,6 +22,17 @@ $(document).ready(function() {
 	// Enter key is pressed/card is swiped
 	$('#value').bind("enterKey",function(){
 
+		// Pause and hide waiting video
+		$('#waiting').get(0).pause();
+		$('#waiting').css('display', 'none');
+
+		// Replay the video after an interval of time has passed
+		// TODO: Reset after each scan
+		setTimeout(function(){
+			$('#waiting').get(0).play();
+			$('#waiting').css('display', '');
+		}, 10000);		
+
 		// Clear win and loss
 		$('.category').css('color', '#ffffff');
 
@@ -51,7 +62,7 @@ $(document).ready(function() {
 						$('#loss').css('color', '#ff0000');
 						break;
 				}
-			},2000);
+			}, 2000);
 
 		} else {
 			$('#invalid').text('Invalid Scan!  Please try again');
