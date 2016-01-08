@@ -7,8 +7,12 @@
 </head>
 <body>
 
-<video id = "waiting" width="1920" height="1080" autoplay loop>
-	<source src="videos/waiting.mp4" type="video/mp4">
+<video id = "loop" width="1920" height="1080" autoplay loop>
+	<source src="videos/loop.mp4" type="video/mp4">
+</video>
+
+<video id = "scan-animation" width="1920" height="1080">
+	<source src="" type="video/mp4">
 </video>
 
 <input id = "value">
@@ -20,26 +24,14 @@
 			<h1 id = "status">Waiting for Scan...</h1>
 			<p id = "invalid"></p>
 		</div>
-	</div>	
-
-	<div class="pure-g">
-		<div class="pure-u-1-3">
-			<h1 class = "category" id = "first-place">Grand Prize</h1>
-		</div>
-		<div class="pure-u-1-3">
-			<h1 class = "category" id = "second-place">Prize Winner</h1>
-		</div>
-		<div class="pure-u-1-3">
-			<h1 class = "category" id = "loss">No Prize</h1>
-		</div>
 	</div>
 
 	<div class="pure-g">
 		<div class="pure-u-1-2">
-			<p class = "category">Grand Prize Winners: <span id = "first-place-count">0</span></p>
+			<p class = "category">Door Prize Winners: <span id = "door-winner-count">0</span></p>
 		</div>
 		<div class="pure-u-1-2">
-			<p class = "category">Prize Winners: <span id = "second-place-count">0</span></p>
+			<p class = "category">Grand Prize Winners: <span id = "grand-winner-count">0</span></p>
 		</div>
 	</div>	
 

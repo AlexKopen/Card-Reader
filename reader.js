@@ -1,24 +1,22 @@
 $(document).ready(function() {
 
-	// Timeout variable for the waiting video after card swipe
-	var waitingTimeout;
-
-	// Start waiting video timeout
-	function startWaitingTimeout(){
-		waitingTimeout = setTimeout(function(){
-			$('#waiting').get(0).play();
-			$('#waiting').css('display', '');
-		}, 15000);	
+	// Play a specific scan animation
+	function playScanAnimation(videoPath){
+		$('#scan-animation').css('display', 'inline');
+		$('#scan-animation > source').attr('src', videoPath);
+		$('#scan-animation').get(0).load();
+		$('#scan-animation').get(0).play();
 	}
 
-	// Clear waiting video timeout
-	function clearWaitingTimeout(){
-		clearTimeout(waitingTimeout);
+	// Restart the loop video
+	function restartLoop(){
+		$('#loop').get(0).play();
+		$('#loop').css('display', '');
 	}
 
 	// Number of winners
-	var firstPlaceWinnerCount = 0;
-	var secondPlaceWinnerCount = 0;
+	var doorWinnerCount = 0;
+	var grandWinnerCount = 0;
 
 	// Select the off-screen input field on page load
 	$('#value').focus();
@@ -36,56 +34,72 @@ $(document).ready(function() {
 		}
 	});
 
+	// Plays the loop video after a scan animation has ended
+	$('#scan-animation').on('ended',function(){
+		$(this).css('display', 'none');
+		restartLoop();
+	});	
+
 	// Enter key is pressed/card is swiped
 	$('#value').bind("enterKey",function(){
 
-		// Pause and hide waiting video
-		$('#waiting').get(0).pause();
-		$('#waiting').css('display', 'none');
+		// Hide the loop video
+		$('#loop').get(0).pause();
+		$('#loop').css('display', 'none');
 
-		// Replay the video after an interval of time has passed
-		clearWaitingTimeout();
-		startWaitingTimeout();	
-
-		// Clear win and loss
-		$('.category').css('color', '#ffffff');
-
+		// Card value from the scanner
 		var scannedValue = $(this).val();
 
 		// Check for a valid scan using the regular expression: start of string, beginning capturing group, semi-colon, any number of digits, question mark, ending capturing group, end of string
 		// Ex. ;763952?
 		if (/^(;\d+\?)$/.test(scannedValue)){
+			// Successful scan: Change the application status and clear any invalid status
 			$('#status').text('Card Scanned!  Loading...');
 			$('#invalid').text('');
 
 			// Add suspense
 			setTimeout(function(){
-				$('#status').text('Waiting for Scan...');
 				switch (scannedValue){
+					// Grand prize
 					case ';888111888?':
-						firstPlaceWinnerCount++;
-						$('#first-place-count').text(firstPlaceWinnerCount);
-						$('#first-place').css('color', '#ff0000');
+						playScanAnimation('videos/grand_prize.mp4');
+						// Prevents users from seeing background text change
+						setTimeout(function(){
+							grandWinnerCount++;
+							$('#grand-winner-count').text(grandWinnerCount);
+							$('#status').text('Waiting for Scan...');
+						}, 2000);
 						break;
+					// Door prize
 					case ';111333555?':
-						secondPlaceWinnerCount++;
-						$('#second-place-count').text(secondPlaceWinnerCount);
-						$('#second-place').css('color', '#ff0000');
+						playScanAnimation('videos/door_prize.mp4');
+						// Prevents users from seeing background text change
+						setTimeout(function(){
+							doorWinnerCount++;
+							$('#door-winner-count').text(doorWinnerCount);
+							$('#status').text('Waiting for Scan...');
+						}, 2000);
 						break;
+					// No prize
 					default:
-						$('#loss').css('color', '#ff0000');
+						restartLoop();
 						break;
 				}
-			}, 2000);
+			}, 4000);
 
 		} else {
+			// Invalid scan
 			$('#invalid').text('Invalid Scan!  Please try again');
 			// Flash
 			$('#invalid').fadeOut('100').fadeIn('100');
+
+			// Restart the loop video after the user has seen the scan wasn't valid
+			// setTimeout(function(){
+			// 	restartLoop();
+			// }, 5000);
 		}
 
 		// Empty the input field for the next scan
 		$(this).val('');
 	});
-
 });
