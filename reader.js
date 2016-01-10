@@ -14,6 +14,7 @@ $(document).ready(function() {
 		$('#loop').css('display', '');
 	}
 
+	// Allow for the user to swipe a card after being prevented from doing so
 	function removeDisabled(){
 		$('#value').removeAttr('disabled');
 		$('#value').focus();		
@@ -104,9 +105,9 @@ $(document).ready(function() {
 			$('#invalid').fadeOut('100').fadeIn('100');
 
 			// Restart the loop video after the user has seen the scan wasn't valid
-			// setTimeout(function(){
-			// 	restartLoop();
-			// }, 5000);
+			setTimeout(function(){
+				restartLoop();
+			}, 10000);
 		}
 
 		// Empty the input field for the next scan
