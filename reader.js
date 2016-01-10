@@ -86,7 +86,7 @@ $(document).ready(function() {
 						}, 2000);
 						break;
 					// Door prize
-					case ';111333555?':
+					default:
 						playScanAnimation('videos/door_prize.mp4');
 						// Prevents users from seeing background text change
 						setTimeout(function(){
@@ -94,11 +94,6 @@ $(document).ready(function() {
 							$('#door-winner-count').text(doorWinnerCount);
 							$('#status').text('Waiting for Scan...');
 						}, 2000);
-						break;
-					// No prize
-					default:
-						removeDisabled();
-						restartLoop();
 						break;
 				}
 			}, 4000);
