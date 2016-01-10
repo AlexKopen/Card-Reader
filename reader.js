@@ -24,6 +24,9 @@ $(document).ready(function() {
 	var doorWinnerCount = 0;
 	var grandWinnerCount = 0;
 
+	// Timeout for invalid scans
+	var invalidTimeout;
+
 	// Select the off-screen input field on page load
 	$('#value').focus();
 
@@ -51,6 +54,9 @@ $(document).ready(function() {
 	$('#value').bind("enterKey",function(){
 		// Prevent any additional input until an animation has played
 		$('#value').attr('disabled', 'true');
+
+		// Clear any invalid timeouts set
+		clearTimeout(invalidTimeout);
 
 		// Hide the loop video
 		$('#loop').get(0).pause();
@@ -105,7 +111,7 @@ $(document).ready(function() {
 			$('#invalid').fadeOut('100').fadeIn('100');
 
 			// Restart the loop video after the user has seen the scan wasn't valid
-			setTimeout(function(){
+			invalidTimeout = setTimeout(function(){
 				restartLoop();
 			}, 10000);
 		}
