@@ -14,6 +14,11 @@ $(document).ready(function() {
 		$('#loop').css('display', '');
 	}
 
+	function removeDisabled(){
+		$('#value').removeAttr('disabled');
+		$('#value').focus();		
+	}
+
 	// Number of winners
 	var doorWinnerCount = 0;
 	var grandWinnerCount = 0;
@@ -37,11 +42,14 @@ $(document).ready(function() {
 	// Plays the loop video after a scan animation has ended
 	$('#scan-animation').on('ended',function(){
 		$(this).css('display', 'none');
+		removeDisabled();
 		restartLoop();
 	});	
 
 	// Enter key is pressed/card is swiped
 	$('#value').bind("enterKey",function(){
+		// Prevent any additional input until an animation has played
+		$('#value').attr('disabled', 'true');
 
 		// Hide the loop video
 		$('#loop').get(0).pause();
@@ -82,12 +90,14 @@ $(document).ready(function() {
 						break;
 					// No prize
 					default:
+						removeDisabled();
 						restartLoop();
 						break;
 				}
 			}, 4000);
 
 		} else {
+			removeDisabled();
 			// Invalid scan
 			$('#invalid').text('Invalid Scan!  Please try again');
 			// Flash
