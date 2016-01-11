@@ -17,7 +17,9 @@ $(document).ready(function() {
 	// Allow for the user to swipe a card after being prevented from doing so
 	function removeDisabled(){
 		$('#value').removeAttr('disabled');
-		$('#value').focus();		
+		setTimeout(function(){
+			$('#value').focus();
+		}, 0); 		
 	}
 
 	// Number of winners
@@ -28,11 +30,16 @@ $(document).ready(function() {
 	var invalidTimeout;
 
 	// Select the off-screen input field on page load
-	$('#value').focus();
+	// setTimeout Firefox hack
+	setTimeout(function(){
+		$('#value').focus();
+	}, 0); 
 
 	// Prevent the user from defocussing the input field
-	$('#value').focusout(function(){
-		$('#value').focus();
+	$('#value').focusout(function(){		
+		setTimeout(function(){
+			$('#value').focus();
+		}, 0); 
 	});	
 
 	// Enter key press to be binded
@@ -52,6 +59,7 @@ $(document).ready(function() {
 
 	// Enter key is pressed/card is swiped
 	$('#value').bind("enterKey",function(){
+
 		// Prevent any additional input until an animation has played
 		$('#value').attr('disabled', 'true');
 
