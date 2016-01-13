@@ -21,8 +21,14 @@ video#scan-animation {
 }
 
 .container {
-	margin: 0 auto;
 	width: 1000px;
+	height: 150px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	/*Negative of half the height and half the width for a vertical and horizontal center*/
+	margin: -75px 0 0 -500px;
+	z-index: -100;
 }
 
 h1, p {
@@ -35,4 +41,8 @@ h1, p {
 
 #messages {
 	height: 100px;
+}
+
+#prize-count {
+	color: #7e7e7e;
 }

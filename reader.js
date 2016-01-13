@@ -17,6 +17,7 @@ $(document).ready(function() {
 	// Allow for the user to swipe a card after being prevented from doing so
 	function removeDisabled(){
 		$('#value').removeAttr('disabled');
+		// Firefox hack for the focus function
 		setTimeout(function(){
 			$('#value').focus();
 		}, 0); 		
@@ -30,7 +31,6 @@ $(document).ready(function() {
 	var invalidTimeout;
 
 	// Select the off-screen input field on page load
-	// setTimeout Firefox hack
 	setTimeout(function(){
 		$('#value').focus();
 	}, 0); 
@@ -85,23 +85,32 @@ $(document).ready(function() {
 				switch (scannedValue){
 					// Grand prize
 					case ';888111888?':
-						playScanAnimation('videos/grand_prize.mp4');
-						// Prevents users from seeing background text change
-						setTimeout(function(){
-							grandWinnerCount++;
-							$('#grand-winner-count').text(grandWinnerCount);
-							$('#status').text('Waiting for Scan...');
-						}, 2000);
+						// Only allow 5 grand prize winners
+						if (grandWinnerCount++ < 5){
+							playScanAnimation('videos/grand_prize.mp4');
+							// Prevents users from seeing background text change
+							setTimeout(function(){
+								$('#status').text('Waiting for Scan...');
+								$('#grand-winner-count').text(grandWinnerCount);
+							}, 5000);							
+
+						} else{
+							doorWinnerCount++;
+							playScanAnimation('videos/door_prize.mp4');
+							setTimeout(function(){								
+								$('#status').text('Waiting for Scan...');
+								$('#door-winner-count').text(doorWinnerCount);
+							}, 5000);
+						}						
 						break;
 					// Door prize
 					default:
+						doorWinnerCount++;
 						playScanAnimation('videos/door_prize.mp4');
-						// Prevents users from seeing background text change
 						setTimeout(function(){
-							doorWinnerCount++;
-							$('#door-winner-count').text(doorWinnerCount);
 							$('#status').text('Waiting for Scan...');
-						}, 2000);
+							$('#door-winner-count').text(doorWinnerCount);
+						}, 5000);
 						break;
 				}
 			}, 4000);
